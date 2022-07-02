@@ -179,153 +179,153 @@ x
 
 
 
-}
+// }
 
-// Load user Faceid from database Function
-/**
- * 
- *
- * @param {*} faceId_profile porfile picture ID 
- * @param {*} id user id
- */
- function loadfaceid(loadedfaceid1, idforcompare) {
+// // Load user Faceid from database Function
+// /**
+//  * 
+//  *
+//  * @param {*} faceId_profile porfile picture ID 
+//  * @param {*} id user id
+//  */
+//  function loadfaceid(loadedfaceid1, idforcompare) {
 
-    axios.get('http://finalmohamed-001-site1.itempurl.com/api/FaceRec/GetById/' + idforcompare , {
+//     axios.get('http://finalmohamed-001-site1.itempurl.com/api/FaceRec/GetById/' + idforcompare , {
 
-     data: loadedfaceid1
+//      data: loadedfaceid1
 
-    })
-    .then(({ data }) => { res.json({ FacID : data  } );
-        console.log(data);
-    })
-    .then(res => {
-      console.log(`statusCode: ${res.status}`);
-      console.log(res);
-    }) .catch(error => {    console.error(error);  } );
+//     })
+//     .then(({ data }) => { res.json({ FacID : data  } );
+//         console.log(data);
+//     })
+//     .then(res => {
+//       console.log(`statusCode: ${res.status}`);
+//       console.log(res);
+//     }) .catch(error => {    console.error(error);  } );
  
 
- }
+//  }
 
 // PUBLIC API ENDPOINTS
 
 // Face Authentication endpoint
-app.post('/faceauth'   ,upload.single("image")  ,function(req, res){ 
+// app.post('/faceauth'   ,upload.single("image")  ,function(req, res){ 
 
-    // var getid = req.body.id;
-    var reqimage;
+//     // var getid = req.body.id;
+//     var reqimage;
 
-    // get image user faceid from database
-    /* loadfaceid(idfromdb, getid) */
+//     // get image user faceid from database
+//     /* loadfaceid(idfromdb, getid) */
      
 
         
-    // if no image is sent, send 400;
-    if(!req.file) {
-        res.statusCode = 400;
-        res.json({'message': 'image is required'});
-        return;
-    }
+//     // if no image is sent, send 400;
+//     if(!req.file) {
+//         res.statusCode = 400;
+//         res.json({'message': 'image is required'});
+//         return;
+//     }
 
-    // get image as binary data, so it can be sent to MS
-    if(req.file) {
-        reqimage = req.file.buffer.toString('base64');
+//     // get image as binary data, so it can be sent to MS
+//     if(req.file) {
+//         reqimage = req.file.buffer.toString('base64');
  
-        if (reqimage) {
-                // detect faces on the login image
-                callMsDetect(reqimage,
-                    function(msDetectData) {
-                        // TODO: send error when more than one face is recognized and let the user pick one
-                        if(msDetectData.length === 1){
-                            profile_personid = msDetectData[0].faceId ;
-                            // idfromdb  = "cafe37fb-a511-4022-9020-564897378ead",
-                            // profile_personid = "23a20d76-9b8f-4469-abf9-1e2cab2c4295",
-                            // compare the recognized face to the saved one
-                            callMsCompare(idfromdb, profile_faceid,
-                                function(msCompareData){
-                                    if(msCompareData.isIdentical && msCompareData.confidence >= config.FACE_API_CONFIDENCE_TRESHOLD){
+//         if (reqimage) {
+//                 // detect faces on the login image
+//                 callMsDetect(reqimage,
+//                     function(msDetectData) {
+//                         // TODO: send error when more than one face is recognized and let the user pick one
+//                         if(msDetectData.length === 1){
+//                             profile_personid = msDetectData[0].faceId ;
+//                             // idfromdb  = "cafe37fb-a511-4022-9020-564897378ead",
+//                             // profile_personid = "23a20d76-9b8f-4469-abf9-1e2cab2c4295",
+//                             // compare the recognized face to the saved one
+//                             callMsCompare(idfromdb, profile_faceid,
+//                                 function(msCompareData){
+//                                     if(msCompareData.isIdentical && msCompareData.confidence >= config.FACE_API_CONFIDENCE_TRESHOLD){
                                     
 
-                                        res.json({
-                                            message: 'Face Authentication succesful',
-                                        });
-                                    }
-                                    else {
-                                        // if faces do not match, send 403
-                                        res.statusCode = 403;
-                                        res.json({'message': 'image login failed - face could not be verified'});
-                                    }
-                                },
-                                function(error){
-                                    // if an error occurs during the compare, send 500
-                                    res.statusCode = 500;
-                                    res.json({'message': 'image login failed - face compare failed'});
-                                });
-                        }
-                        else {
-                            // if no face can be recognized on the login image, send 400
-                            res.statusCode = 400;
-                            res.json({'message': 'image login failed - no face recognized'});
-                        }
-                    },
-                    function(error) {
-                        // if an error occurs during the detection, send 500
-                        res.statusCode = 500;
-                        res.json({'message':'face detection failed'});
-                    });
-            }
-            else {
-                // if no valid image data is given, send error
-                res.statusCode = 400;
-                res.json({message: 'face photo is required'});
-            }
+//                                         res.json({
+//                                             message: 'Face Authentication succesful',
+//                                         });
+//                                     }
+//                                     else {
+//                                         // if faces do not match, send 403
+//                                         res.statusCode = 403;
+//                                         res.json({'message': 'image login failed - face could not be verified'});
+//                                     }
+//                                 },
+//                                 function(error){
+//                                     // if an error occurs during the compare, send 500
+//                                     res.statusCode = 500;
+//                                     res.json({'message': 'image login failed - face compare failed'});
+//                                 });
+//                         }
+//                         else {
+//                             // if no face can be recognized on the login image, send 400
+//                             res.statusCode = 400;
+//                             res.json({'message': 'image login failed - no face recognized'});
+//                         }
+//                     },
+//                     function(error) {
+//                         // if an error occurs during the detection, send 500
+//                         res.statusCode = 500;
+//                         res.json({'message':'face detection failed'});
+//                     });
+//             }
+//             else {
+//                 // if no valid image data is given, send error
+//                 res.statusCode = 400;
+//                 res.json({message: 'face photo is required'});
+//             }
         
-        }
-});
+//         }
+// });
 
-// Save Profile Picture Face Id to database endpoint         
-app.post('/profilepic',  upload.single("image"),   function(req, res){
+// // Save Profile Picture Face Id to database endpoint         
+// app.post('/profilepic',  upload.single("image"),   function(req, res){
 
-    // var  reqid = req.body.id,
-    // var  reqid = 1,
-    const imageurl = url.pathToFileURL(req.file.path)
-    console.log("test////////////////" + imageurl   + "//////////////////////////////");
+//     // var  reqid = req.body.id,
+//     // var  reqid = 1,
+//     const imageurl = url.pathToFileURL(req.file.path)
+//     console.log("test////////////////" + imageurl   + "//////////////////////////////");
 
-    callMsDetect(imageurl,
-        function(msDetectData) {
-            var faceMessage = '';
-            // face will only be saved if only one face is recognized
-            // if no face or more than one face is recognized, the user will be informed
-            if(msDetectData === 1){
-                profile_faceid = msDetectData.faceId ;
-                faceMessage = 'Face detected and saved';   
-            }  
-            else if(!msDetectData.length){
+//     callMsDetect(imageurl,
+//         function(msDetectData) {
+//             var faceMessage = '';
+//             // face will only be saved if only one face is recognized
+//             // if no face or more than one face is recognized, the user will be informed
+//             if(msDetectData === 1){
+//                 profile_faceid = msDetectData.faceId ;
+//                 faceMessage = 'Face detected and saved';   
+//             }  
+//             else if(!msDetectData.length){
 
-                faceMessage = 'No face was recognized.'
-             }
-            else {
-                faceMessage = 'More than one face was recognized.'
-            }
+//                 faceMessage = 'No face was recognized.'
+//              }
+//             else {
+//                 faceMessage = 'More than one face was recognized.'
+//             }
 
 
-            res.json({
+//             res.json({
 
-                message: 'FaceId was created ' + faceMessage,
+//                 message: 'FaceId was created ' + faceMessage,
                         
-                    });
+//                     });
 
                  
-                  });
+//                   });
 
                   
 
-                //   savetodb(profile_faceid,reqid);
+//                 //   savetodb(profile_faceid,reqid);
                   
                 
 
 
             
-});
+// });
          
 app.post('/comparetest' , upload.single("image")   ,(req, res) => {
 
