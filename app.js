@@ -68,35 +68,35 @@ app.use(function(req, res, next){
  * @param {*} onSuccess success callback
  * @param {*} onError error callback
  */
- function callMsDetect(imageData, onSuccess) {
-    var msDetectOptions = {
+//  function callMsDetect(imageData, onSuccess) {
+//     var msDetectOptions = {
 
-        host: 'helpmefaceauth.cognitiveservices.azure.com',
-        method: 'POST',
-        port: 443,
-        path: '/face/v1.0/detect?returnFaceId=true&recognitionModel=recognition_01&returnRecognitionModel=false&detectionModel=detection_01&overlaod=stream',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(imageData),
-            'Ocp-Apim-Subscription-Key': config.FACE_API_KEY
-        }
-    };
+//         host: 'helpmefaceauth.cognitiveservices.azure.com',
+//         method: 'POST',
+//         port: 443,
+//         path: '/face/v1.0/detect?returnFaceId=true&recognitionModel=recognition_01&returnRecognitionModel=false&detectionModel=detection_01&overlaod=stream',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Content-Length': Buffer.byteLength(imageData),
+//             'Ocp-Apim-Subscription-Key': config.FACE_API_KEY
+//         }
+//     };
 
-    var msDetectReq = https.request(msDetectOptions, function(msDetectResponse) {
-        msDetectResponse.setEncoding('utf8');
-        msDetectResponse.on('data', (msDetectData) => {
-                onSuccess(JSON.parse(msDetectData));
-            });
-    });
+//     var msDetectReq = https.request(msDetectOptions, function(msDetectResponse) {
+//         msDetectResponse.setEncoding('utf8');
+//         msDetectResponse.on('data', (msDetectData) => {
+//                 onSuccess(JSON.parse(msDetectData));
+//             });
+//     });
 
-    msDetectReq.on('error', error => {
-        console.error(error);
-      });
-    msDetectReq.write(imageData);
-    msDetectReq.end();
+//     msDetectReq.on('error', error => {
+//         console.error(error);
+//       });
+//     msDetectReq.write(imageData);
+//     msDetectReq.end();
 
 
-}
+// }
 
 // function callMsDetect(imageData, onSuccess) {
 
@@ -123,33 +123,33 @@ app.use(function(req, res, next){
  * @param {*} onSuccess success callback
  * @param {*} onError error callback
  */
-function callMsCompare(faceId_profile, faceId2, onSuccess, onError) {
-    var msVerifyOptions = {
-        host: 'helpmefaceauth.cognitiveservices.azure.com',
-        method: 'POST',
-        port: 443,
-        path: '/face/v1.0//face/v1.0/verify?recognitionModel=recognition_01&returnRecognitionModel=false',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(imageData),
-            'Ocp-Apim-Subscription-Key': config.FACE_API_KEY
+// function callMsCompare(faceId_profile, faceId2, onSuccess, onError) {
+//     var msVerifyOptions = {
+//         host: 'helpmefaceauth.cognitiveservices.azure.com',
+//         method: 'POST',
+//         port: 443,
+//         path: '/face/v1.0//face/v1.0/verify?recognitionModel=recognition_01&returnRecognitionModel=false',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Content-Length': Buffer.byteLength(imageData),
+//             'Ocp-Apim-Subscription-Key': config.FACE_API_KEY
 
-        }
-    }
+//         }
+//     }
 
-    var msVerifyReq = https.request(msVerifyOptions, function(msVerifyResponse) {
-         msVerifyResponse.setEncoding('utf8');
-         msVerifyResponse.on('data', function(msVerifyData) {
-         onSuccess(JSON.parse(msVerifyData));
-         });
-    })
+//     var msVerifyReq = https.request(msVerifyOptions, function(msVerifyResponse) {
+//          msVerifyResponse.setEncoding('utf8');
+//          msVerifyResponse.on('data', function(msVerifyData) {
+//          onSuccess(JSON.parse(msVerifyData));
+//          });
+//     })
 
-    msVerifyReq.on('error', error => {
-        console.error(error);
-      });
-    msVerifyReq.write(JSON.stringify({faceId: faceId1, personId: faceId2}));
-    msVerifyReq.end();
-}
+//     msVerifyReq.on('error', error => {
+//         console.error(error);
+//       });
+//     msVerifyReq.write(JSON.stringify({faceId: faceId1, personId: faceId2}));
+//     msVerifyReq.end();
+// }
 
 
 
@@ -160,22 +160,22 @@ function callMsCompare(faceId_profile, faceId2, onSuccess, onError) {
  * @param {*} id user ID
  */
 
- function savetodb(savefaceId_profile, userid) {
+//  function savetodb(savefaceId_profile, userid) {
 
-    axios.post('http://finalmohamed-001-site1.itempurl.com/api/FaceRec/Insert', {
-        "FacID": savefaceId_profile
-        ,"VolunteerId": userid
+//     axios.post('http://finalmohamed-001-site1.itempurl.com/api/FaceRec/Insert', {
+//         "FacID": savefaceId_profile
+//         ,"VolunteerId": userid
 
-    }). then(res => {
-        console.log(`statusCode: ${res.status}`);
-        console.log(res);
+//     }). then(res => {
+//         console.log(`statusCode: ${res.status}`);
+//         console.log(res);
         
 
-    }).catch(error => {
+//     }).catch(error => {
      
-     console.error(error);
-x
-    });
+//      console.error(error);
+
+//     });
 
 
 
